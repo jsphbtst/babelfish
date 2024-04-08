@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jsphbtst/babelfish/pkg/loader"
 	"github.com/jsphbtst/babelfish/pkg/requests"
 	"github.com/jsphbtst/babelfish/pkg/types"
 	"github.com/spf13/cobra"
@@ -58,10 +59,16 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 		phrase,
 		targetLang,
 	)
+
+	end := loader.PrintProgress("Translating...")
+	defer end()
+
 	result, err := requests.RequestGpt4Translation(prompt)
 	if err != nil {
 		panic(err)
 	}
+
+	end()
 
 	for _, choice := range result.Choices {
 		translation := choice.Message.Content

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jsphbtst/babelfish/pkg/loader"
 	"github.com/jsphbtst/babelfish/pkg/requests"
 	"github.com/jsphbtst/babelfish/pkg/types"
 	"github.com/spf13/cobra"
@@ -49,10 +50,16 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 		"Can you break down the phrase \"%s\"? I'm trying to learn this language and I need a breakdown. In this scenario, act as if you're a robot who isn't familiar with manners, therefore, you only provide the explanation directly.",
 		phrase,
 	)
+
+	end := loader.PrintProgress("Breakdown in progress...")
+	defer end()
+
 	result, err := requests.RequestGpt4Translation(prompt)
 	if err != nil {
 		panic(err)
 	}
+
+	end()
 
 	for _, choice := range result.Choices {
 		answer := choice.Message.Content
