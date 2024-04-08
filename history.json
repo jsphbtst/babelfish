@@ -1,0 +1,19 @@
+{
+ "data": [
+  {
+   "phrase": "i am smart, bro",
+   "translation": "¡Soy inteligente, hermano!",
+   "createdAt": "2024-04-07T18:14:56.119175Z"
+  },
+  {
+   "phrase": "heat it up, please. thanks",
+   "translation": "Caliéntalo, por favor. ¡Gracias!",
+   "createdAt": "2024-04-07T18:18:36.684887Z"
+  },
+  {
+   "phrase": "渋谷駅はどこですか？あそこです？",
+   "translation": "¿Dónde está la estación de Shibuya? ¿Está allí?",
+   "createdAt": "2024-04-07T18:20:55.522334Z"
+  }
+ ]
+}
