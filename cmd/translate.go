@@ -30,7 +30,12 @@ var convCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(convCmd)
 	convCmd.Flags().StringP("phrase", "p", "howdy?", "The phrase that needs to be translated")
-	convCmd.Flags().StringP("target", "t", "spanish", "The target language for translation")
+	convCmd.Flags().StringP(
+		"target",
+		"t",
+		"", // TODO: fix this later
+		"The target language for translation",
+	)
 }
 
 func generateTranslation(cmd *cobra.Command, args []string) {
@@ -42,6 +47,10 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 	targetLang, err := cmd.Flags().GetString("target")
 	if err != nil {
 		panic(err)
+	}
+
+	if targetLang == "" {
+		targetLang = globals.Configs.Defaults.TargetLanguage
 	}
 
 	lowercasedPhrase := strings.ToLower(phrase)
