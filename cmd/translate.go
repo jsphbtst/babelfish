@@ -44,8 +44,6 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	fmt.Println("Phrase:", phrase)
-
 	lowercasedPhrase := strings.ToLower(phrase)
 	for _, p := range globals.History.Data {
 		isSamePhrase := strings.ToLower(p.Phrase) == lowercasedPhrase
