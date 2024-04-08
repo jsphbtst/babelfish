@@ -30,7 +30,7 @@ var convCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(convCmd)
 	convCmd.Flags().StringP("phrase", "p", "howdy?", "The phrase that needs to be translated")
-	convCmd.Flags().StringP("target", "t", "Castellano", "The target language for translation")
+	convCmd.Flags().StringP("target", "t", "spanish", "The target language for translation")
 }
 
 func generateTranslation(cmd *cobra.Command, args []string) {
@@ -48,7 +48,9 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 
 	lowercasedPhrase := strings.ToLower(phrase)
 	for _, p := range globals.History.Data {
-		if strings.ToLower(p.Phrase) == lowercasedPhrase {
+		isSamePhrase := strings.ToLower(p.Phrase) == lowercasedPhrase
+		isSameTargetLang := p.To == strings.ToLower(targetLang)
+		if isSamePhrase && isSameTargetLang {
 			fmt.Printf("Translation: %s\n", p.Translation)
 			return
 		}
@@ -78,6 +80,7 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 			types.HistoryRecord{
 				Phrase:      phrase,
 				Translation: translation,
+				To:          strings.ToLower(targetLang),
 				CreatedAt:   time.Now().UTC(),
 			},
 		)
