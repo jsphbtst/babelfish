@@ -6,3 +6,5 @@ Translate CLI Tool Roadmap
 [X] Translation History
 [X] "Cache" Through Translation History
 [X] Translation Breakdown via GPT4
+[X] Add Configs Default Language
+[] Add Capability to Change Configs
