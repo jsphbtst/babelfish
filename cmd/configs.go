@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
+	"github.com/jsphbtst/babelfish/pkg/checkers"
 	"github.com/spf13/cobra"
 )
 
@@ -73,7 +75,13 @@ func runUpdateConfig(cmd *cobra.Command, args []string) {
 		switch args[1] {
 		case "targetLanguage":
 			if len(args) >= 3 {
-				globals.Configs.Defaults.TargetLanguage = args[2]
+				targetLanguage := strings.ToLower(args[2])
+				if !checkers.IsSupportedLanguage(targetLanguage) {
+					fmt.Println("Currently an unsupported language")
+					os.Exit(1)
+				}
+
+				globals.Configs.Defaults.TargetLanguage = targetLanguage
 			} else {
 				fmt.Println("Incorrect usage.")
 				os.Exit(1)

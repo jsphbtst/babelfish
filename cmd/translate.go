@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jsphbtst/babelfish/pkg/checkers"
 	"github.com/jsphbtst/babelfish/pkg/loader"
 	"github.com/jsphbtst/babelfish/pkg/requests"
 	"github.com/jsphbtst/babelfish/pkg/types"
@@ -51,6 +52,11 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 
 	if targetLang == "" {
 		targetLang = globals.Configs.Defaults.TargetLanguage
+	}
+
+	if !checkers.IsSupportedLanguage(strings.ToLower(targetLang)) {
+		fmt.Println("Currently an unsupported language")
+		os.Exit(1)
 	}
 
 	lowercasedPhrase := strings.ToLower(phrase)
