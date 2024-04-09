@@ -46,7 +46,8 @@ var updateConfigCmd = &cobra.Command{
 
 	For example:
 
-	babelfish configs update defaults targetLanguage "spanish"
+	babelfish configs update dot.separated.path TO_CHANGE
+	babelfish configs update defaults.targetLanguage "spanish"
 	`,
 	Run: runUpdateConfig,
 }
@@ -69,28 +70,32 @@ func runListConfigs(cmd *cobra.Command, args []string) {
 }
 
 func runUpdateConfig(cmd *cobra.Command, args []string) {
-	switch args[0] {
+	if len(args) != 2 {
+		fmt.Println("Incorrect usage.")
+		os.Exit(1)
+	}
+
+	path := strings.Split(args[0], ".")
+	updateValue := args[1]
+
+	switch path[0] {
 	case "defaults":
-
-		switch args[1] {
+		// TODO bug: babelfish configs update defaults.targetLanguage.askjdnaskjdn "english"
+		// will trigger the update still.
+		switch path[1] {
 		case "targetLanguage":
-			if len(args) >= 3 {
-				targetLanguage := strings.ToLower(args[2])
-				if !checkers.IsSupportedLanguage(targetLanguage) {
-					fmt.Println("Currently an unsupported language")
-					os.Exit(1)
-				}
-
-				globals.Configs.Defaults.TargetLanguage = targetLanguage
-			} else {
-				fmt.Println("Incorrect usage.")
+			targetLanguage := strings.ToLower(updateValue)
+			if !checkers.IsSupportedLanguage(targetLanguage) {
+				fmt.Println("Currently an unsupported language")
 				os.Exit(1)
 			}
 
+			globals.Configs.Defaults.TargetLanguage = targetLanguage
+
 		case "stream":
-			if args[2] == "true" {
+			if updateValue == "true" {
 				globals.Configs.Defaults.Stream = true
-			} else if args[2] == "false" {
+			} else if updateValue == "false" {
 				globals.Configs.Defaults.Stream = false
 			} else {
 				fmt.Println("Invalid value for stream, must be true or false")
@@ -98,7 +103,7 @@ func runUpdateConfig(cmd *cobra.Command, args []string) {
 			}
 
 		default:
-			fmt.Printf("Unknown config field \"%s\" found\n", args[1])
+			fmt.Printf("Unknown config field \"%s\" found\n", path[1])
 			os.Exit(1)
 		}
 
