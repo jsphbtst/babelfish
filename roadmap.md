@@ -8,7 +8,8 @@ Babelfish Features Roadmap
 [X] Local Cache Breakdowns History
 [X] Translation Breakdown via GPT4
 [X] Add Configs Default Language
-[] Add Capability to Change Configs
+[X] Add Capability to Change Configs
+[] Make Sure to Check that Target Language Is Legitimate in Configs
 [] Add Remote Data Sync Capability
 
 Notes:
