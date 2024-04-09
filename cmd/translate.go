@@ -45,6 +45,11 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
+	if !checkers.IsWithinCwsLimit(phrase) {
+		fmt.Println("You've exceeded the currently supported max 180 CWS limit.")
+		os.Exit(1)
+	}
+
 	targetLang, err := cmd.Flags().GetString("target")
 	if err != nil {
 		panic(err)

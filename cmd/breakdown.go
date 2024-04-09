@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jsphbtst/babelfish/pkg/checkers"
 	"github.com/jsphbtst/babelfish/pkg/loader"
 	"github.com/jsphbtst/babelfish/pkg/requests"
 	"github.com/jsphbtst/babelfish/pkg/types"
@@ -35,6 +36,11 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 	phrase, err := cmd.Flags().GetString("phrase")
 	if err != nil {
 		panic(err)
+	}
+
+	if !checkers.IsWithinCwsLimit(phrase) {
+		fmt.Println("You've exceeded the currently supported max 180 CWS limit.")
+		os.Exit(1)
 	}
 
 	lowercasedPhrase := strings.ToLower(phrase)
