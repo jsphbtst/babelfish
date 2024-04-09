@@ -80,10 +80,13 @@ func runUpdateConfig(cmd *cobra.Command, args []string) {
 
 	switch path[0] {
 	case "defaults":
-		// TODO bug: babelfish configs update defaults.targetLanguage.askjdnaskjdn "english"
-		// will trigger the update still.
 		switch path[1] {
 		case "targetLanguage":
+			if len(path) > 2 {
+				fmt.Println("Config path does not exist")
+				os.Exit(1)
+			}
+
 			targetLanguage := strings.ToLower(updateValue)
 			if !checkers.IsSupportedLanguage(targetLanguage) {
 				fmt.Println("Currently an unsupported language")
@@ -93,6 +96,11 @@ func runUpdateConfig(cmd *cobra.Command, args []string) {
 			globals.Configs.Defaults.TargetLanguage = targetLanguage
 
 		case "stream":
+			if len(path) > 2 {
+				fmt.Println("Config path does not exist")
+				os.Exit(1)
+			}
+
 			if updateValue == "true" {
 				globals.Configs.Defaults.Stream = true
 			} else if updateValue == "false" {
