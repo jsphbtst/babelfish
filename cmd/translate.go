@@ -75,6 +75,8 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 		}
 	}
 
+	checkers.CheckInternet()
+
 	prompt := fmt.Sprintf(
 		"How do you say %s in %s? Offer the translation directly. Thanks!",
 		phrase,

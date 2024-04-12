@@ -34,8 +34,6 @@ func main() {
 
 	envkeys := []string{"OPENAI_API_KEY"}
 	checkers.CheckEnv(envkeys, true)
-	// TODO: move this somewhere else
-	checkers.CheckInternet()
 
 	var configs types.Configs
 	err = files.CreateOrParse(

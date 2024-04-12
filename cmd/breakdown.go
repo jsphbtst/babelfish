@@ -53,6 +53,8 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 		}
 	}
 
+	checkers.CheckInternet()
+
 	prompt := fmt.Sprintf(
 		"Can you break down the phrase \"%s\"? I'm trying to learn this language and I need a breakdown. In this scenario, act as if you're a robot who isn't familiar with manners, therefore, you only provide the explanation directly.",
 		phrase,
