@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 )
 
+// TODO: this looks like a mess. Might need some refactoring
+// to make it more readable lol
 func CreateOrParse(rootDir string, filename string, defaultData []byte, structure interface{}) error {
 	filePath := filepath.Join(rootDir, filename)
 	jsonFile, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0666)
