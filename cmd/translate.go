@@ -77,6 +77,7 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 	}
 
 	checkers.CheckInternet()
+	checkers.CheckOpenAiKey(globals.OpenAiKey)
 
 	prompt := fmt.Sprintf(
 		"How do you say %s in %s? Offer the translation directly. Thanks!",
@@ -87,7 +88,7 @@ func generateTranslation(cmd *cobra.Command, args []string) {
 	end := loader.PrintProgress("Translating...")
 	defer end()
 
-	result, err := requests.RequestGpt4Translation(prompt)
+	result, err := requests.RequestGpt4Translation(prompt, globals.OpenAiKey)
 	if err != nil {
 		panic(err)
 	}

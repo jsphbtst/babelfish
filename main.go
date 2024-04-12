@@ -1,13 +1,11 @@
 package main
 
 import (
-	"log"
+	"io"
 	"os"
 	"path/filepath"
 
-	"github.com/joho/godotenv"
 	"github.com/jsphbtst/babelfish/cmd"
-	"github.com/jsphbtst/babelfish/pkg/checkers"
 	"github.com/jsphbtst/babelfish/pkg/files"
 	"github.com/jsphbtst/babelfish/pkg/types"
 )
@@ -26,15 +24,38 @@ func main() {
 
 	cmd.InitRootDir(rootDir)
 
-	envPath := filepath.Join(rootDir, ".env")
-	err = godotenv.Load(envPath)
+	// TODO: refactor this part later
+	keyFile, err := os.OpenFile(
+		filepath.Join(rootDir, "openai-access-key"),
+		os.O_RDWR|os.O_CREATE,
+		0666,
+	)
 	if err != nil {
-		log.Printf("Error loading .env file: %s\n", err.Error())
+		panic(err)
+	}
+	defer keyFile.Close()
+
+	info, err := keyFile.Stat()
+	if err != nil {
+		panic(err)
 	}
 
-	envkeys := []string{"OPENAI_API_KEY"}
-	checkers.CheckEnv(envkeys, true)
+	if info.Size() == 0 {
+		_, err := keyFile.Write([]byte(""))
+		if err != nil {
+			panic(err)
+		}
+	}
 
+	openAiBytes, err := io.ReadAll(keyFile)
+	if err != nil {
+		panic(err)
+	}
+
+	openAiApiKey := string(openAiBytes)
+	cmd.InitOpenAiKey(openAiApiKey)
+
+	// Configs file
 	var configs types.Configs
 	err = files.CreateOrParse(
 		rootDir,

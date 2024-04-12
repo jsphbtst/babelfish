@@ -7,6 +7,7 @@ type Globals struct {
 	Explanations *types.BreakdownJson
 	Configs      *types.Configs
 	RootDir      string
+	OpenAiKey    string
 }
 
 var globals Globals
@@ -25,4 +26,8 @@ func InitConfigs(configs *types.Configs) {
 
 func InitRootDir(rootDir string) {
 	globals.RootDir = rootDir
+}
+
+func InitOpenAiKey(openAiKey string) {
+	globals.OpenAiKey = openAiKey
 }

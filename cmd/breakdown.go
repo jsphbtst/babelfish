@@ -54,6 +54,7 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 	}
 
 	checkers.CheckInternet()
+	checkers.CheckOpenAiKey(globals.OpenAiKey)
 
 	prompt := fmt.Sprintf(
 		"Can you break down the phrase \"%s\"? I'm trying to learn this language and I need a breakdown. In this scenario, act as if you're a robot who isn't familiar with manners, therefore, you only provide the explanation directly.",
@@ -63,7 +64,7 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 	end := loader.PrintProgress("Breakdown in progress...")
 	defer end()
 
-	result, err := requests.RequestGpt4Translation(prompt)
+	result, err := requests.RequestGpt4Translation(prompt, globals.OpenAiKey)
 	if err != nil {
 		panic(err)
 	}

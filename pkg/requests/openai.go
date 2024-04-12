@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 type Message struct {
@@ -43,7 +42,7 @@ type GptResponse struct {
 
 const completionUrl string = "https://api.openai.com/v1/chat/completions"
 
-func RequestGpt4Translation(prompt string) (*GptResponse, error) {
+func RequestGpt4Translation(prompt string, openAiKey string) (*GptResponse, error) {
 	requestBody := GptRequestBody{
 		Model: "gpt-4",
 		Messages: []Message{
@@ -65,7 +64,6 @@ func RequestGpt4Translation(prompt string) (*GptResponse, error) {
 		return nil, err
 	}
 
-	openAiKey := os.Getenv("OPENAI_API_KEY")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", openAiKey))
 	req.Header.Set("Content-Type", "application/json")
 
