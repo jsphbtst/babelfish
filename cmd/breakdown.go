@@ -23,22 +23,22 @@ var breakdownCmd = &cobra.Command{
 
 	For example:
 
-	translate-cli breakdown -p "donde esta la biblioteca?"
+	babelfish breakdown "donde esta la biblioteca?"
 `,
 	Run: runBreakdownCmd,
 }
 
 func init() {
 	rootCmd.AddCommand(breakdownCmd)
-	breakdownCmd.Flags().StringP("phrase", "p", "", "The language phrase to be broken down")
 }
 
 func runBreakdownCmd(cmd *cobra.Command, args []string) {
-	phrase, err := cmd.Flags().GetString("phrase")
-	if err != nil {
-		panic(err)
+	if len(args) != 1 {
+		fmt.Println("Incorrect usage")
+		os.Exit(1)
 	}
 
+	phrase := args[0]
 	if !checkers.IsWithinCwsLimit(phrase) {
 		fmt.Println("You've exceeded the currently supported max 180 CWS limit.")
 		os.Exit(1)

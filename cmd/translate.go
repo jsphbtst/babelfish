@@ -17,21 +17,21 @@ import (
 )
 
 var convCmd = &cobra.Command{
-	Use:   "conv",
+	Use:   "translate",
 	Short: "Translate text to your target language",
 	Long: `Command to translate any word, sentence, or phrase into your target language. The
 	default is Castellano.
 
 	For example:
 
-	translate-cli conv -p "this is a sample text"
+	babelfish translate "this is a sample text"
+	babelfish translate "this is a sample text" -t "Spanish"
 `,
 	Run: generateTranslation,
 }
 
 func init() {
 	rootCmd.AddCommand(convCmd)
-	convCmd.Flags().StringP("phrase", "p", "howdy?", "The phrase that needs to be translated")
 	convCmd.Flags().StringP(
 		"target",
 		"t",
@@ -41,11 +41,12 @@ func init() {
 }
 
 func generateTranslation(cmd *cobra.Command, args []string) {
-	phrase, err := cmd.Flags().GetString("phrase")
-	if err != nil {
-		panic(err)
+	if len(args) != 1 {
+		fmt.Println("Incorrect usage")
+		os.Exit(1)
 	}
 
+	phrase := args[0]
 	if !checkers.IsWithinCwsLimit(phrase) {
 		fmt.Println("You've exceeded the currently supported max 180 CWS limit.")
 		os.Exit(1)
