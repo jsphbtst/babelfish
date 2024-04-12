@@ -39,6 +39,7 @@ func runHistoryCmd(cmd *cobra.Command, args []string) {
 		}
 		fmt.Println("Phrase: ", p.Phrase)
 		fmt.Println("Translation: ", p.Translation)
+		fmt.Println("Translated To: ", p.To)
 		fmt.Printf("Created At: %+v\n\n", p.CreatedAt)
 	}
 }

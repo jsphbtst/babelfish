@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/jsphbtst/babelfish/pkg/checkers"
@@ -126,7 +127,8 @@ func runUpdateConfig(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	err = os.WriteFile("configs.json", configsBytes, 0644)
+	configsPath := filepath.Join(globals.RootDir, "configs.json")
+	err = os.WriteFile(configsPath, configsBytes, 0644)
 	if err != nil {
 		fmt.Printf("Failed to update configs file: %s\n", err.Error())
 		os.Exit(1)

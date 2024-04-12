@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -87,7 +88,8 @@ func runBreakdownCmd(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	err = os.WriteFile("breakdowns.json", file, 0644)
+	filePath := filepath.Join(globals.RootDir, "breakdowns.json")
+	err = os.WriteFile(filePath, file, 0644)
 	if err != nil {
 		log.Fatalf("Failed to update history file: %s\n", err.Error())
 		return
