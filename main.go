@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
 	"github.com/jsphbtst/babelfish/cmd"
@@ -13,7 +14,19 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
+	home, err := os.UserHomeDir()
+	if err != nil {
+		panic(err)
+	}
+
+	rootPwd := filepath.Join(home, ".babelfish")
+	err = os.MkdirAll(rootPwd, 0755)
+	if err != nil {
+		panic(err)
+	}
+
+	envPath := filepath.Join(rootPwd, ".env")
+	err = godotenv.Load(envPath)
 	if err != nil {
 		log.Printf("Error loading .env file: %s\n", err.Error())
 	}

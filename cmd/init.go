@@ -6,6 +6,7 @@ type Globals struct {
 	History      *types.HistoryJson
 	Explanations *types.BreakdownJson
 	Configs      *types.Configs
+	FileLoc      string
 }
 
 var globals Globals
@@ -20,4 +21,8 @@ func InitBreakdowns(breakdowns *types.BreakdownJson) {
 
 func InitConfigs(configs *types.Configs) {
 	globals.Configs = configs
+}
+
+func InitFileLoc(fileLoc string) {
+	globals.FileLoc = fileLoc
 }
