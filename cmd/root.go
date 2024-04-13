@@ -1,7 +1,3 @@
-/*
- * Copyright © 2023 Joseph J. Bautista jsphbtst@proton.me
- */
-
 package cmd
 
 import (
