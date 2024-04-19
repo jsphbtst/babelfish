@@ -6,23 +6,26 @@ import (
 	"path/filepath"
 
 	"github.com/jsphbtst/babelfish/cmd"
+	"github.com/jsphbtst/babelfish/pkg/data"
 	"github.com/jsphbtst/babelfish/pkg/files"
 	"github.com/jsphbtst/babelfish/pkg/types"
 )
 
 func main() {
-	home, err := os.UserHomeDir()
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
 
-	rootDir := filepath.Join(home, ".babelfish")
+	rootDir := filepath.Join(homeDir, ".babelfish")
 	err = os.MkdirAll(rootDir, 0755)
 	if err != nil {
 		panic(err)
 	}
 
 	cmd.InitRootDir(rootDir)
+
+	data.InitializeDirFiles(rootDir)
 
 	// TODO: refactor this part later
 	keyFile, err := os.OpenFile(
@@ -34,18 +37,6 @@ func main() {
 		panic(err)
 	}
 	defer keyFile.Close()
-
-	info, err := keyFile.Stat()
-	if err != nil {
-		panic(err)
-	}
-
-	if info.Size() == 0 {
-		_, err := keyFile.Write([]byte(""))
-		if err != nil {
-			panic(err)
-		}
-	}
 
 	openAiBytes, err := io.ReadAll(keyFile)
 	if err != nil {
