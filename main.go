@@ -48,13 +48,7 @@ func main() {
 
 	// Configs file
 	var configs types.Configs
-	err = files.CreateOrParse(
-		rootDir,
-		"configs.json",
-		[]byte("{ \"defaults\": { \"targetLanguage\": \"spanish\", \"stream\": false } }"),
-		&configs,
-	)
-
+	err = files.Parse(filepath.Join(rootDir, "configs.json"), &configs)
 	if err != nil {
 		panic(err)
 	}
@@ -63,13 +57,7 @@ func main() {
 
 	// History File
 	var history types.HistoryJson
-	err = files.CreateOrParse(
-		rootDir,
-		"history.json",
-		[]byte("{ \"data\": [] }"),
-		&history,
-	)
-
+	err = files.Parse(filepath.Join(rootDir, "history.json"), &history)
 	if err != nil {
 		panic(err)
 	}
@@ -78,13 +66,7 @@ func main() {
 
 	// Breakdowns File
 	var breakdowns types.BreakdownJson
-	err = files.CreateOrParse(
-		rootDir,
-		"breakdowns.json",
-		[]byte("{ \"data\": [] }"),
-		&breakdowns,
-	)
-
+	err = files.Parse(filepath.Join(rootDir, "breakdowns.json"), &breakdowns)
 	if err != nil {
 		panic(err)
 	}

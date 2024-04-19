@@ -14,7 +14,9 @@ var historyCmd = &cobra.Command{
 
 	For example:
 
-	translate-cli history
+	babelfish history
+	babelfish history -l 1
+	babelfish history --limit 1
 `,
 	Run: runHistoryCmd,
 }
